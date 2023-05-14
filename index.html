@@ -196,8 +196,13 @@
 
     .result details {
       width: 100%;
+      overflow-y: scroll;
       /* padding: 1em; */
       /* background-color: black; */
+    }
+
+    .result details::-webkit-scrollbar {
+      display: none;
     }
 
     .result details summary {
