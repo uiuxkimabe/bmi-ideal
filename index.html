@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cek Berat Badan Idealmu</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      list-style: none;
+      text-decoration: none;
+      font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+        sans-serif;
+    }
+
+    .container {
+      width: 90%;
+      height: 100%;
+      margin: auto;
+    }
+
+    .row {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 1em;
+      align-items: center;
+    }
+
+    main {
+      height: 100vh;
+      background: url(https://images.unsplash.com/photo-1605296867304-46d5465a13f1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80),
+        no-repeat;
+      background-position: center;
+      background-size: cover;
+    }
+
+    main form {
+      padding: 1em;
+      background-color: rgba(28, 28, 28, 0.8);
+      border-radius: 5px;
+    }
+
+    main .container h1 {
+      margin-bottom: 1em;
+      text-align: center;
+      color: #fff;
+    }
+
+    main label {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    main input {
+      font-size: 1.2rem;
+      padding: 0.5em;
+      width: 100%;
+      margin: 0.8em 0;
+      border: 1px solid #000;
+      color: #fff;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    main button {
+      width: 100%;
+      border: none;
+      padding: 1em 0;
+      background-color: black;
+      color: white;
+      border-radius: 5px;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .gender {
+      margin: 1em 0;
+    }
+
+    .input-label {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      gap: 1em;
+    }
+
+    .result {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.857);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      transition: 0.3s ease-in-out;
+      transform: translateY(-100%);
+    }
+
+    .result.modalBox {
+      transform: translateY(0);
+      z-index: 1;
+    }
+
+    .result .animation {
+      position: absolute;
+      top: 50;
+      left: 50;
+      transform: translate(-50%, 50%);
+      display: block;
+      width: 50px;
+      height: 50px;
+      border-top: 3px solid white;
+      border-left: 3px solid white;
+      border-radius: 50%;
+      opacity: 0;
+    }
+
+    .result .animation.load {
+      animation: load 1s ease-in-out infinite alternate-reverse;
+    }
+
+    @keyframes load {
+      0% {
+        transform: rotate(0);
+      }
+      100% {
+        opacity: 1;
+        transform: rotate(720deg);
+      }
+    }
+
+    .result header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .result figcaption {
+      width: 320px;
+      height: 80vh;
+      overflow-y: scroll;
+      border-radius: 5px;
+      box-shadow: 3px 6px 10px rgba(0, 0, 0, 0.2);
+      background-color: azure;
+      position: relative;
+      /* transform: translateY(-10%);
+      opacity: 0; */
+      transition: 0.3s ease-in-out;
+    }
+
+    .result figcaption.modalBox {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .result figcaption::-webkit-scrollbar {
+      display: none;
+    }
+
+    .result figcaption header {
+      position: sticky;
+      top: 0;
+      padding: 1em;
+      background-color: black;
+      color: white;
+    }
+
+    .result .review {
+      display: flex;
+      justify-content: center;
+      gap: 1em;
+      align-items: center;
+    }
+
+    .result .card,
+    .modulo {
+      padding: 1em;
+      text-align: center;
+    }
+
+    .result .card-ideal {
+      color: darkgreen;
+    }
+
+    .result .card span {
+      font-size: 2.5rem;
+    }
+
+    .result details {
+      width: 100%;
+      /* padding: 1em; */
+      /* background-color: black; */
+    }
+
+    .result details summary {
+      padding: 1em;
+      background-color: #000;
+      color: #fff;
+    }
+
+    .result details p {
+      padding: 1em;
+    }
+
+    footer {
+      width: 100%;
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      position: fixed;
+      bottom: 0;
+      padding: 1em;
+      z-index: 1;
+    }
+  </style>
+  <body>
+    <main>
+      <div class="container">
+        <div class="row">
+          <form>
+            <h1>Body Mass Index</h1>
+            <div>
+              <label>Nama</label><br />
+              <input type="text" id="name" />
+            </div>
+            <div class="input-label gender">
+              <label>Pria</label>
+              <input type="radio" name="gender" id="male" value="Pria" />
+              <label>Wanita</label>
+              <input type="radio" name="gender" id="female" value="Wanita" />
+            </div>
+            <div class="input-label">
+              <article>
+                <label>Berat Badan Saat Ini</label><br />
+                <input type="text" id="weight" />
+              </article>
+              <article>
+                <label>Tinggi Badan</label><br />
+                <input type="text" id="height" />
+              </article>
+            </div>
+            <button type="button" id="start">Lihat Hasil</button>
+          </form>
+        </div>
+      </div>
+    </main>
+    <section class="result">
+      <span class="animation"></span>
+      <figcaption>
+        <header>
+          <p>Hi, <span class="nama"></span></p>
+          <button type="button">❌</button>
+        </header>
+        <div class="review">
+          <div class="card">
+            <p>Berat Badanmu Saat Ini Adalah</p>
+            <span class="kg">0</span>Kg
+          </div>
+          <div class="card card-ideal">
+            <p>Berat Badan Ideal Adalah</p>
+            <span class="kg kg-ideal">0</span>Kg
+          </div>
+        </div>
+        <div class="modulo">
+          <h3></h3>
+        </div>
+        <details>
+          <summary>Saran</summary>
+          <p></p>
+        </details>
+      </figcaption>
+    </section>
+
+    <!-- footer -->
+    <footer>
+      <div class="container">
+        <p>Created By Kiki | © 2023</p>
+      </div>
+    </footer>
+
+    <!-- vanilla js -->
+    <!-- <script src="main.js"></script> -->
+    <script src="script.js"></script>
+  </body>
+</html>
